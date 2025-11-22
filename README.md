@@ -30,6 +30,7 @@ dependencies:
 Use the API function, `findClusters`, which takes a list of double precision numbers and an integer for the cluster count and returns a `ClusterResult` object. Please see `/test/cluster_api.test` for examples. 
 
 ```dart    
+    
     test('Basic clustering k=2', () {
       final data = [1.0, 2.0, 3.0, 10.0, 11.0, 12.0];
       final result = findClusters(data, 2);
@@ -39,8 +40,8 @@ Use the API function, `findClusters`, which takes a list of double precision num
       expect(result.clusters[1].values, [10.0, 11.0, 12.0]);
       expect(result.clusters[0].mean, 2.0);
       expect(result.clusters[1].mean, 11.0);
-      expect(result.clusters[0].size, 3.0);
-      expect(result.clusters[1].size, 3.0);
+      expect(result.clusters[0].elementCount, 3.0);
+      expect(result.clusters[1].elementCount, 3.0);
       expect(
         result.clusters[0].sumOfSquares,
         2.0,
