@@ -2,7 +2,7 @@
 
 This is a Dart native implementation of the Ckmeans.1d.dp clustering algorithm. The original implementation is in C++ with an R wrapper (see https://github.com/cran/Ckmeans.1d.dp/tree/master). 
 
-Described by the original authors (below) as, "The package provides a powerful set of tools for fast, optimal, and reproducible univariate clustering by dynamic programming.".
+Described by the original authors (listed below) as, "The package provides a powerful set of tools for fast, optimal, and reproducible univariate clustering by dynamic programming.".
 
 ## Features
 
@@ -10,9 +10,9 @@ Please see the original documentation for a description of the features: https:/
 
 Limitations:
 - Only 1D data is supported.
-- Only double precision is supported.
-- Only integer a user-specified number of clusters is supported. The original supported a range of cluster counts.
-- The original implementation also includes routines for histograms and plots of the clusters. These are not implemented here.
+- Only double precision is supported for the input list.
+- The user must specify number of clusters. The original supported a range of cluster counts.
+- The original implementation also includes routines for histograms and plots of the clusters. These are not implemented here so that the library can be used in a headless environment.
 
 ## Getting started
 
