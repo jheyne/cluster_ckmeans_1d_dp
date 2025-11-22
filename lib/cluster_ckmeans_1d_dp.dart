@@ -2,3 +2,4 @@
 library;
 
 export 'src/ckmeans.dart';
+export 'src/cluster_api.dart';
