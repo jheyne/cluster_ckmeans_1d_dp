@@ -10,12 +10,12 @@ NamedClusterResult clustersNamed(
 ) {
   final result = ckmeans(input, clusterNames.length);
   assert(
-    result.clusters.length >= clusterNames.length,
-    'insufficient clusters',
+    result.clusters.length <= clusterNames.length,
+    'insufficient cluster names',
   );
   while (result.clusters.length < clusterNames.length) {
     final removed = clusterNames.removeAt(clusterNames.length ~/ 2);
-    print('Removed $removed from clusterNames: insufficient clusters');
+    print('Removed $removed from clusterNames: excess cluster names');
   }
   final clusters = List<NamedCluster>.empty(growable: true);
   for (int i = 0; i < result.clusters.length; i++) {
@@ -60,11 +60,11 @@ class NamedCluster {
   final int clusterIndex;
 
   /// The values in the cluster.
-  final List<double> values;
+  final List<num> values;
 
-  double get min => values.first;
+  num get min => values.first;
 
-  double get max => values.last;
+  num get max => values.last;
 
   /// The center (mean) of the cluster.
   final double mean;

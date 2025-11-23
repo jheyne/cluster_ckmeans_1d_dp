@@ -1,7 +1,7 @@
 /// Result of the Ckmeans algorithm.
 class CkmeansResult {
   /// The clusters found.
-  final List<List<double>> clusters;
+  final List<List<num>> clusters;
 
   /// The centers (means) of each cluster.
   final List<double> centers;
@@ -36,7 +36,7 @@ class CkmeansResult {
 /// Returns a [CkmeansResult] containing the clusters and statistics.
 ///
 /// Throws [ArgumentError] if [data] is empty or [k] is invalid.
-CkmeansResult ckmeans(List<double> data, int k, {bool isPreSorted = false}) {
+CkmeansResult ckmeans(List<num> data, int k, {bool isPreSorted = false}) {
   if (data.isEmpty) {
     throw ArgumentError('Data cannot be empty');
   }
@@ -45,7 +45,7 @@ CkmeansResult ckmeans(List<double> data, int k, {bool isPreSorted = false}) {
   }
 
   // Sort data
-  final x = isPreSorted ? data : List<double>.from(data)
+  final x = isPreSorted ? data : List<num>.from(data)
     ..sort();
   final n = x.length;
 
@@ -127,7 +127,7 @@ CkmeansResult ckmeans(List<double> data, int k, {bool isPreSorted = false}) {
   }
 
   // Backtrack to find clusters
-  final clusters = <List<double>>[];
+  final clusters = <List<num>>[];
   int currentEnd = n - 1;
   for (int m = k - 1; m >= 0; m--) {
     final start = backtrack[m][currentEnd];

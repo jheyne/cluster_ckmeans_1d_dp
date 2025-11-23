@@ -3,7 +3,7 @@ import 'ckmeans.dart';
 /// Find clusters using the Ckmeans algorithm. This is a wrapper
 /// around the traditional Ckmeans API which can be found in
 /// ckmeans.dart.
-ClusterResult findClusters(List<double> input, int clusterCount) {
+ClusterResult findClusters(List<num> input, int clusterCount) {
   final result = ckmeans(input, clusterCount);
   final clusters = List<Cluster>.empty(growable: true);
   for (int i = 0; i < result.clusters.length; i++) {
@@ -35,7 +35,7 @@ class Cluster {
   final int clusterIndex;
 
   /// The values in the cluster.
-  final List<double> values;
+  final List<num> values;
 
   /// The center (mean) of the cluster.
   final double mean;
