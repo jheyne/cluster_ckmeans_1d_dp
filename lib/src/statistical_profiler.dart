@@ -5,9 +5,6 @@ enum Prefer { low, mid, high, unknown }
 
 enum RangeLength { three, five }
 
-const valueRangeLabels3 = ['Worse', 'Mid', 'Better'];
-const valueRangeLabels5 = ['Worst', 'Worse', 'Mid', 'Better', 'Best'];
-
 List<String> getClusterLabels(Prefer prefer, RangeLength length) {
   final worst = 'Worst';
   final worse = 'Worse';
@@ -43,30 +40,30 @@ class ProfileResult {
   final int count;
 
   /// The minimum value.
-  final double min;
+  final num min;
 
   /// The maximum value.
-  final double max;
+  final num max;
 
   /// The arithmetic mean.
-  final double mean;
+  final num mean;
 
   /// The median value (50th percentile).
-  final double median;
+  final num median;
 
   /// The standard deviation.
-  final double standardDeviation;
+  final num standardDeviation;
 
   /// The lower quartile (25th percentile).
-  final double lowerQuartile;
+  final num lowerQuartile;
 
   /// The upper quartile (75th percentile).
-  final double upperQuartile;
+  final num upperQuartile;
 
   /// The sum of all values.
-  final double sum;
+  final num sum;
 
-  List<double> sortedData;
+  List<num> sortedData;
 
   NamedClusterResult clusters;
 
@@ -91,14 +88,14 @@ class ProfileResult {
   }
 }
 
-class UnivariateStatisticalProfiler {
-  final List<double> data;
+class StatisticalProfiler {
+  final List<num> data;
 
   late List<String> clusterLabels;
 
   Prefer prefer;
 
-  UnivariateStatisticalProfiler(
+  StatisticalProfiler(
     this.data, {
     this.prefer = Prefer.unknown,
     RangeLength rangeLength = RangeLength.five,
@@ -118,11 +115,11 @@ class UnivariateStatisticalProfiler {
     }
 
     // Sort data (copy to avoid mutating original)
-    final sortedData = List<double>.from(data)..sort();
+    final sortedData = List<num>.from(data)..sort();
     final n = sortedData.length;
 
-    double sum = 0.0;
-    double sumSquared = 0.0;
+    num sum = 0;
+    num sumSquared = 0;
 
     // Single pass for sum and sumSquared
     for (final value in sortedData) {
@@ -137,7 +134,7 @@ class UnivariateStatisticalProfiler {
     ); // Handle potential floating point errors
 
     // Quartiles
-    double getPercentile(double p) {
+    num getPercentile(double p) {
       final index = p * (n - 1);
       final lowerIndex = index.floor();
       final upperIndex = index.ceil();

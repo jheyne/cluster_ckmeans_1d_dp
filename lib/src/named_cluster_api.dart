@@ -4,10 +4,7 @@ import 'ckmeans.dart';
 /// Find clusters using the Ckmeans algorithm. This is a wrapper
 /// around the traditional Ckmeans API which can be found in
 /// ckmeans.dart.
-NamedClusterResult clustersNamed(
-  List<double> input,
-  List<String> clusterNames,
-) {
+NamedClusterResult clustersNamed(List<num> input, List<String> clusterNames) {
   final result = ckmeans(input, clusterNames.length);
   assert(
     result.clusters.length <= clusterNames.length,

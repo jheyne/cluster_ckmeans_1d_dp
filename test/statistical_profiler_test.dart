@@ -1,15 +1,15 @@
 import 'package:test/test.dart';
-import 'package:cluster_ckmeans_1d_dp/src/univariate_statistical_profiler.dart';
+import 'package:cluster_ckmeans_1d_dp/src/statistical_profiler.dart';
 
 void main() {
   group('UnivariateStatisticalProfiler', () {
     test('throws ArgumentError on empty list', () {
-      final profiler = UnivariateStatisticalProfiler([]);
+      final profiler = StatisticalProfiler([]);
       expect(() => profiler.profile(), throwsArgumentError);
     });
 
     test('calculates stats for single element', () {
-      final profiler = UnivariateStatisticalProfiler([5.0]);
+      final profiler = StatisticalProfiler([5.0]);
       final result = profiler.profile();
 
       expect(result.count, 1);
@@ -23,7 +23,7 @@ void main() {
 
     test('calculates stats for simple list (odd count)', () {
       final data = [1.0, 2.0, 3.0, 4.0, 5.0];
-      final profiler = UnivariateStatisticalProfiler(data);
+      final profiler = StatisticalProfiler(data);
       final result = profiler.profile();
 
       expect(result.count, 5);
@@ -40,7 +40,7 @@ void main() {
 
     test('calculates stats for simple list (even count)', () {
       final data = [1.0, 2.0, 3.0, 4.0];
-      final profiler = UnivariateStatisticalProfiler(data);
+      final profiler = StatisticalProfiler(data);
       final result = profiler.profile();
 
       expect(result.count, 4);
@@ -55,7 +55,7 @@ void main() {
 
     test('handles unsorted input', () {
       final data = [5.0, 1.0, 4.0, 2.0, 3.0];
-      final profiler = UnivariateStatisticalProfiler(data);
+      final profiler = StatisticalProfiler(data);
       final result = profiler.profile();
 
       expect(result.min, 1.0);
@@ -69,7 +69,7 @@ void main() {
       // p=0.25 -> index = 0.75. lower=0, upper=1. weight=0.75.
       // val = 0 * 0.25 + 10 * 0.75 = 7.5
       final data = [0.0, 10.0, 20.0, 30.0];
-      final profiler = UnivariateStatisticalProfiler(data);
+      final profiler = StatisticalProfiler(data);
       final result = profiler.profile();
 
       expect(result.lowerQuartile, 7.5);
