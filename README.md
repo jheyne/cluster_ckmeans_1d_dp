@@ -36,17 +36,16 @@ Use the API function, `findClusters`, which takes a list of double precision num
       final result = findClusters(data, 2);
 
       expect(result.clusters.length, 2);
-      expect(result.clusters[0].values, [1.0, 2.0, 3.0]);
-      expect(result.clusters[1].values, [10.0, 11.0, 12.0]);
-      expect(result.clusters[0].mean, 2.0);
-      expect(result.clusters[1].mean, 11.0);
-      expect(result.clusters[0].elementCount, 3.0);
-      expect(result.clusters[1].elementCount, 3.0);
-      expect(
-        result.clusters[0].sumOfSquares,
-        2.0,
-      ); // (1-2)^2 + (2-2)^2 + (3-2)^2 = 1 + 0 + 1 = 2
-      expect(result.clusters[1].sumOfSquares, 2.0);
+      var firstCluster = result.clusters.first;
+      expect(firstCluster.values, [1.0, 2.0, 3.0]);
+      expect(firstCluster.mean, 2.0);
+      expect(firstCluster.elementCount, 3.0);
+      expect(firstCluster.sumOfSquares, 2.0);
+      var lastCluster = result.clusters.last;
+      expect(lastCluster.values, [10.0, 11.0, 12.0]);
+      expect(lastCluster.mean, 11.0);
+      expect(lastCluster.elementCount, 3.0);
+      expect(lastCluster.sumOfSquares, 2.0);
       expect(result.totalSumOfSquares, 4.0);
     });
 ```

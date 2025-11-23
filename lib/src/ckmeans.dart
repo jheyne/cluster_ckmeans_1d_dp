@@ -15,12 +15,16 @@ class CkmeansResult {
   /// The total within-cluster sum of squares.
   final double totalWithinss;
 
+  /// The number of unique elements in the dataset.
+  final int uniqueElements;
+
   CkmeansResult({
     required this.clusters,
     required this.centers,
     required this.withinss,
     required this.sizes,
     required this.totalWithinss,
+    required this.uniqueElements,
   });
 }
 
@@ -32,7 +36,7 @@ class CkmeansResult {
 /// Returns a [CkmeansResult] containing the clusters and statistics.
 ///
 /// Throws [ArgumentError] if [data] is empty or [k] is invalid.
-CkmeansResult ckmeans(List<double> data, int k) {
+CkmeansResult ckmeans(List<double> data, int k, {bool isPreSorted = false}) {
   if (data.isEmpty) {
     throw ArgumentError('Data cannot be empty');
   }
@@ -41,7 +45,8 @@ CkmeansResult ckmeans(List<double> data, int k) {
   }
 
   // Sort data
-  final x = List<double>.from(data)..sort();
+  final x = isPreSorted ? data : List<double>.from(data)
+    ..sort();
   final n = x.length;
 
   // Check unique elements
@@ -164,5 +169,6 @@ CkmeansResult ckmeans(List<double> data, int k) {
     withinss: withinss,
     sizes: sizes,
     totalWithinss: totalWithinss,
+    uniqueElements: nUnique,
   );
 }
