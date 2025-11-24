@@ -88,5 +88,5 @@ class NamedCluster {
     assert(values.reduce(math.max) == max);
   }
 
-  bool contains(num value) => min >= value && max <= value;
+  bool contains(num value) => value >= min && value <= max;
 }
