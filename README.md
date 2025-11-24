@@ -66,6 +66,7 @@ If you need a comprehensive statistical profile of the data , try the `Statistic
     this.bestValues = BestValues.unknown,
     ClusterCount clusterCount = ClusterCount.five,
   })
+```
 
 ## Additional information
 
