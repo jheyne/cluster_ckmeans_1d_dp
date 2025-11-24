@@ -43,7 +43,7 @@ Use the API function, `findClusters(List<num> data, int clusterCount)`, which re
       expect(firstCluster.sumOfSquares, 2.0);
     });
 ```
-The `findClusters` function is a wrapper around the traditional 'ckmeans' function which remains available for use. `findClusters` is a less cryptic and more object-oriented facade for the original function.
+The `findClusters` function is a wrapper around the traditional `ckmeans` function which remains available for use. `findClusters` is a less cryptic and more object-oriented facade for the original function.
 
 Sometimes it is useful to have named clusters. For this purpose, the `clustersNamed(List<num> input, List<String> clusterNames)` function is provided. Please see `/test/named_cluster_api.test` for examples. 
 
@@ -56,7 +56,7 @@ Sometimes it is useful to have named clusters. For this purpose, the `clustersNa
     });
 ```
 
-  If you need a comprehensive statistical profile of the data , try the `StatisticalProfiler` class. It calculates commonly used statistical features, including clusters, with minimum traversal of the data. Please see `/test/statistical_profiler.test` for examples. 
+If you need a comprehensive statistical profile of the data , try the `StatisticalProfiler` class. It calculates commonly used statistical features, including clusters, with minimum traversal of the data. Please see `/test/statistical_profiler.test` for examples. 
 
 ```dart
     
