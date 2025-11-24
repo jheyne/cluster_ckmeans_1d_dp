@@ -1,11 +1,13 @@
 import 'dart:math';
 import 'named_cluster_api.dart';
 
-enum Prefer { low, mid, high, unknown }
+/// Indicates, for example, whether high values are better. This is used to generate cluster labels.
+enum BestValues { low, mid, high, unknown }
 
-enum RangeLength { three, five }
+/// Indicates the number of clusters to generate. This is used to generate cluster labels.
+enum ClusterCount { three, five }
 
-List<String> getClusterLabels(Prefer prefer, RangeLength length) {
+List<String> getClusterLabels(BestValues prefer, ClusterCount length) {
   final worst = 'Worst';
   final worse = 'Worse';
   final mid = 'Mid';
@@ -13,20 +15,20 @@ List<String> getClusterLabels(Prefer prefer, RangeLength length) {
   final best = 'Best';
 
   switch (prefer) {
-    case Prefer.low:
-      return length == RangeLength.three
+    case BestValues.low:
+      return length == ClusterCount.three
           ? [best, mid, worst]
           : [best, better, mid, worse, worst];
-    case Prefer.mid:
-      return length == RangeLength.three
+    case BestValues.mid:
+      return length == ClusterCount.three
           ? [worse, best, worse]
           : [worst, worse, best, worse, worst];
-    case Prefer.high:
-      return length == RangeLength.three
+    case BestValues.high:
+      return length == ClusterCount.three
           ? [worst, mid, best]
           : [worst, worse, mid, better, best];
-    case Prefer.unknown:
-      return length == RangeLength.three
+    case BestValues.unknown:
+      return length == ClusterCount.three
           ? ['Lower', 'Mid', 'Higher']
           : ['Lowest', 'Lower', 'Mid', 'Higher', 'Highest'];
   }
@@ -34,7 +36,7 @@ List<String> getClusterLabels(Prefer prefer, RangeLength length) {
 
 /// Result of the univariate statistical profiling.
 class ProfileResult {
-  final Prefer prefer;
+  final BestValues prefer;
 
   /// The number of elements in the dataset.
   final int count;
@@ -88,20 +90,23 @@ class ProfileResult {
   }
 }
 
+/// Calculates a comprehensive statistical profile of the data, including clustering.
 class StatisticalProfiler {
   final List<num> data;
 
   late List<String> clusterLabels;
 
-  Prefer prefer;
+  BestValues bestValues;
 
+  /// BestBalues and ClusterCount are used to generate cluster labels. Labels can also be provided explicitly.
   StatisticalProfiler(
     this.data, {
-    this.prefer = Prefer.unknown,
-    RangeLength rangeLength = RangeLength.five,
     List<String>? clusterLabels,
+    this.bestValues = BestValues.unknown,
+    ClusterCount clusterCount = ClusterCount.five,
   }) {
-    this.clusterLabels = clusterLabels ?? getClusterLabels(prefer, rangeLength);
+    this.clusterLabels =
+        clusterLabels ?? getClusterLabels(bestValues, clusterCount);
   }
 
   /// Calculates statistical profile of the data.
@@ -153,7 +158,7 @@ class StatisticalProfiler {
     final clusters = clustersNamed(sortedData, clusterLabels);
 
     return ProfileResult(
-      prefer: prefer,
+      prefer: bestValues,
       sortedData: sortedData,
       count: n,
       min: sortedData.first,

@@ -10,9 +10,10 @@ Google Gemini generated the Dart code from the C++ code.
 
 Please see the original documentation for a description of the features: https://github.com/cran/Ckmeans.1d.dp/tree/master
 
+The original implementation only supported List<double> as input. This implementation supports List<num>. Objects that are not <num> but which can be represented by <num> can be clustered by using a custom adapter. An example is provided for List<DateTime>, see DateTimeAdapter.
+
 Limitations:
 - Only 1D data is supported.
-- Only double precision is supported for the input list.
 - The user must specify the number of clusters. The original supported a range of cluster counts.
 - The original implementation also includes routines for histograms and plots of the clusters. These are not implemented here so that the library can be used in headless and web environments.
 
@@ -27,29 +28,44 @@ dependencies:
 
 ## Usage
 
-Use the API function, `findClusters`, which takes a list of double precision numbers and an integer for the cluster count and returns a `ClusterResult` object. Please see `/test/cluster_api.test` for examples. 
+Use the API function, `findClusters(List<num> data, int clusterCount)`, which returns a `ClusterResult` object. Please see `/test/cluster_api.test` for examples. 
 
 ```dart    
     
     test('Basic clustering k=2', () {
       final data = [1.0, 2.0, 3.0, 10.0, 11.0, 12.0];
       final result = findClusters(data, 2);
-
       expect(result.clusters.length, 2);
       var firstCluster = result.clusters.first;
       expect(firstCluster.values, [1.0, 2.0, 3.0]);
       expect(firstCluster.mean, 2.0);
       expect(firstCluster.elementCount, 3.0);
       expect(firstCluster.sumOfSquares, 2.0);
-      var lastCluster = result.clusters.last;
-      expect(lastCluster.values, [10.0, 11.0, 12.0]);
-      expect(lastCluster.mean, 11.0);
-      expect(lastCluster.elementCount, 3.0);
-      expect(lastCluster.sumOfSquares, 2.0);
-      expect(result.totalSumOfSquares, 4.0);
     });
 ```
-The 'findClusters' function is a wrapper around the traditional 'ckmeans' function which remains available for use. It is a less cryptic and more object oriented facade for the original function.
+The 'findClusters' function is a wrapper around the traditional 'ckmeans' function which remains available for use. 'findClusters' is a less cryptic and more object-oriented facade for the original function.
+
+Sometimes it is useful to have named clusters. For this purpose, the 'clustersNamed(List<num> input, List<String> clusterNames)' function is provided. Please see `/test/named_cluster_api.test` for examples. 
+
+```dart    
+    
+    test('Basic clustering k=2', () {
+      final data = [1.0, 2.0, 3.0, 10.0, 11.0, 12.0];
+      final result = clustersNamed(data, ['A', 'B']);
+      expect(result.clusters.length, 2);
+    });
+```
+
+If you need a comprehensive statistical profile of the data , try the `StatisticalProfiler` class. It calculates commonly used statistical features, including clusters, with minimum traversal of the data. Please see `/test/statistical_profiler.test` for examples. 
+
+```dart
+    
+  StatisticalProfiler(
+    this.data, {
+    List<String>? clusterLabels,
+    this.bestValues = BestValues.unknown,
+    ClusterCount clusterCount = ClusterCount.five,
+  })
 
 ## Additional information
 
