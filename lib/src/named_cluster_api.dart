@@ -38,7 +38,7 @@ class NamedClusterResult {
 
   NamedClusterResult(this.clusters, this.totalSumOfSquares);
 
-  String mapValueToName(double value) {
+  String getClusterName(num value) {
     return clusters
         .firstWhere(
           (cluster) => cluster.contains(value),
@@ -47,11 +47,14 @@ class NamedClusterResult {
         )
         .name;
   }
+
+  List<String> getClusterNames(List<num> list) =>
+      list.map((value) => getClusterName(value)).toList();
 }
 
 /// Details about a single cluster.
 class NamedCluster {
-  final String name;
+  String name;
 
   /// The cluster index.
   final int clusterIndex;
@@ -85,5 +88,5 @@ class NamedCluster {
     assert(values.reduce(math.max) == max);
   }
 
-  bool contains(double value) => min >= value && max <= value;
+  bool contains(num value) => min >= value && max <= value;
 }
