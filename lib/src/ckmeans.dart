@@ -71,7 +71,7 @@ CkmeansResult ckmeans(List<num> data, int k, {bool isPreSorted = false}) {
 
   for (int i = 0; i < n; i++) {
     sumX[i + 1] = sumX[i] + x[i];
-    sumX2[i + 1] = sumX2[i] + x[i] * x[i];
+    sumX2[i + 1] = sumX2[i] + x[i].toDouble() * x[i].toDouble();
   }
 
   double getCost(int i, int j) {

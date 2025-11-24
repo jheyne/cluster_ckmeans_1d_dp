@@ -6,9 +6,7 @@ class DateTimeAdapter {
   late NamedClusterResult result;
 
   DateTimeAdapter(List<DateTime> data, {int clusterCount = 5}) {
-    List<num> input = data
-        .map((e) => e.millisecondsSinceEpoch.toDouble())
-        .toList();
+    List<num> input = data.map((e) => e.millisecondsSinceEpoch).toList();
     result = clustersNamed(
       input,
       List<String>.filled(clusterCount, '', growable: true),
